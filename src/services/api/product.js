@@ -1,5 +1,5 @@
 import axios from 'axios';
-import endPoints from '@services/api';
+import endPoints from '../api';
 
 const addProduct = async (body) => {
     const config = {

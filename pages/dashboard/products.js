@@ -1,19 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { CheckIcon } from '@heroicons/react/solid'
 import Modal from '../../src/common/Modal'
 import FormProduct from '../../src/components/FormData'
+import axios from 'axios'
+import endPoints from '../../src/services/api'
+import useAlert from '../../src/hooks/useAlert'
+import Alert from '../../src/common/Alert'
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
-export default function products() {
+export default function Products() {
 
     const [products, setProducts] = useState([]);
     const [open, setOpen] = useState(false);
+    const { alert, setAlert, toggleAlert } = useAlert();
+
+    useEffect(() => {
+        async function getProducts(){
+            const response = await axios.get(endPoints.products.products)
+            setProducts(response.data)
+        }
+        try {
+            getProducts();
+        } catch (error) {
+            console.log(error.message)
+        }
+    },[]);
 
     return (
         <>
+            <Alert alert={alert} handleClose={toggleAlert} />
             <div className="lg:flex lg:items-center lg:justify-between">
                 <div className="flex-1 min-w-0">
                     <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">List of Products</h2>
@@ -94,7 +108,7 @@ export default function products() {
                 </div>
             </div>
             <Modal open={open} setOpen={setOpen}>
-                <FormProduct/>
+                <FormProduct setOpen={setOpen} setAlert={setAlert} />
             </Modal>
         </>
     )
