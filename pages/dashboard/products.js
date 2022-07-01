@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CheckIcon } from '@heroicons/react/solid'
 import Modal from '../../src/common/Modal'
-
+import FormProduct from '../../src/components/FormData'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -94,7 +94,7 @@ export default function products() {
                 </div>
             </div>
             <Modal open={open} setOpen={setOpen}>
-                <h1>Hola Mundo</h1>
+                <FormProduct/>
             </Modal>
         </>
     )
