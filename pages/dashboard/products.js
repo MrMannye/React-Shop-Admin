@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { CheckIcon } from '@heroicons/react/solid'
+import { CheckIcon, XCircleIcon } from '@heroicons/react/solid'
 import Modal from '../../src/common/Modal'
 import FormProduct from '../../src/components/FormData'
 import axios from 'axios'
 import endPoints from '../../src/services/api'
 import useAlert from '../../src/hooks/useAlert'
 import Alert from '../../src/common/Alert'
+import { deleteProduct } from '../../src/services/api/product'
 
 export default function Products() {
 
@@ -23,7 +24,27 @@ export default function Products() {
         } catch (error) {
             console.log(error.message)
         }
-    },[]);
+    },[alert]);
+
+    const handleDelete = (id) => {
+        deleteProduct(id)
+            .then(() => {
+                setAlert({
+                    active: true,
+                    message: "Product Deleted",
+                    type: "success",
+                    autoClose: false,
+                });
+            })
+            .catch((error) => {
+                setAlert({
+                    active: true,
+                    message: error.message,
+                    type: "error",
+                    autoClose: false,
+                });
+            });
+    };
 
     return (
         <>
@@ -95,9 +116,12 @@ export default function Products() {
                                                 </a>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                                    Delete
-                                                </a>
+                                                <XCircleIcon 
+                                                    className='flex-shrink-0 h-6 w-6 text-gray-400 cursor-pointer'
+                                                    onClick={()=> handleDelete(product.id)}
+                                                    aria-hidden='true'
+                                                >
+                                                    </XCircleIcon>
                                             </td>
                                         </tr>
                                     ))}
