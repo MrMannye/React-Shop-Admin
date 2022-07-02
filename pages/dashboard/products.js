@@ -6,6 +6,7 @@ import axios from 'axios'
 import endPoints from '../../src/services/api'
 import useAlert from '../../src/hooks/useAlert'
 import Alert from '../../src/common/Alert'
+import Link from 'next/link'
 import { deleteProduct } from '../../src/services/api/product'
 
 export default function Products() {
@@ -111,9 +112,9 @@ export default function Products() {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.id}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                                <Link href={`/dashboard/edit/${product.id}`} className="text-indigo-600 hover:text-indigo-900">
                                                     Edit
-                                                </a>
+                                                </Link>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <XCircleIcon 

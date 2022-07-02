@@ -1,10 +1,11 @@
 import { useRef } from "react";
-import { addProduct } from "../services/api/product";
+import { addProduct , updateProduct} from "../services/api/product";
+import { useRouter } from "next/router";
 
+export default function FormProduct({ setOpen, setAlert, product }) {
 
-export default function FormProduct({setOpen, setAlert, product}) {
-    
     const formRef = useRef(null);
+    const router = useRouter();
     console.log(product)
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -13,26 +14,31 @@ export default function FormProduct({setOpen, setAlert, product}) {
             title: formData.get('title'),
             price: parseInt(formData.get('price')),
             description: formData.get('description'),
-            categoryId: parseInt(formData.get('category')), 
+            categoryId: parseInt(formData.get('category')),
             images: [formData.get('images').name],
         }
-        console.log(data);
-        addProduct(data).then(() => {
-            setAlert({
-                active: true,
-                message: 'Product added succesfully',
-                type: 'success',
-                autoClose: false,
-            });
-            setOpen(false);
-        }).catch(error => {
-            setAlert({
-                active: true,
-                message: error.message,
-                type: 'error',
-                autoClose: true,
+        if (product) {
+            updateProduct(product.id, data).then(() =>{
+                router.push('/dashboard/products')
             })
-        })
+        } else {
+            addProduct(data).then(() => {
+                setAlert({
+                    active: true,
+                    message: 'Product added succesfully',
+                    type: 'success',
+                    autoClose: false,
+                });
+                setOpen(false);
+            }).catch(error => {
+                setAlert({
+                    active: true,
+                    message: error.message,
+                    type: 'error',
+                    autoClose: true,
+                })
+            })
+        }
     }
 
     return (
