@@ -16,6 +16,12 @@ export const useAuth = () => {
 
 function useProvideAuth(){
     const [user, setUser] = useState(null);
+    const logOut = async() => {
+        Cookies.remove('token')
+        setUser(null);
+        delete axios.defaults.headers.Authorization;
+        window.location.href = '/login'
+    }
     const signIn = async (email,password) =>{
         const options = {
             headers:{
@@ -38,6 +44,7 @@ function useProvideAuth(){
     }
     return{
         user,
-        signIn
+        signIn,
+        logOut
     }
 }
