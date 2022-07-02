@@ -2,9 +2,10 @@ import { useRef } from "react";
 import { addProduct } from "../services/api/product";
 
 
-export default function FormProduct({setOpen, setAlert}) {
+export default function FormProduct({setOpen, setAlert, product}) {
     
     const formRef = useRef(null);
+    console.log(product)
     const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData(formRef.current);
@@ -48,6 +49,7 @@ export default function FormProduct({setOpen, setAlert}) {
                             </label>
                             <input
                                 type="text"
+                                defaultValue={product?.title}
                                 name="title"
                                 id="title"
                                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -77,6 +79,7 @@ export default function FormProduct({setOpen, setAlert}) {
                             <select
                                 id="category"
                                 name="category"
+                                defaultValue={product?.category}
                                 autoComplete="category-name"
                                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             >
@@ -98,9 +101,10 @@ export default function FormProduct({setOpen, setAlert}) {
                             <textarea
                                 name="description"
                                 id="description"
+                                defaultValue={product?.description}
                                 autoComplete="description"
                                 rows="3"
-                                className="form-textarea mt-1 block w-full mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                className="form-textarea mt-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                             />
                         </div>
                         <div className="col-span-6">
@@ -133,6 +137,7 @@ export default function FormProduct({setOpen, setAlert}) {
                                                 <input
                                                     id="images"
                                                     name="images"
+                                                    defaultValue={product?.images}
                                                     type="file"
                                                     className="sr-only"
                                                 />
